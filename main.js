@@ -31,7 +31,7 @@ const articulos = [
     },
     {
         id: "Pc4",
-        titulo: "./img/AMD7700.jpg",
+        titulo: "PC AMD Ryzen7 X",
         imagen: "./img/AMD7700.jpg",
         categoria: {
             nombre: "Pc",
@@ -115,7 +115,9 @@ const articulos = [
 
 const contenedorProductos = document.querySelector("#contenedor-productos");
 const botonesCategorias = document.querySelectorAll(".boton-categoria");
+const titulo = document.querySelector("#titulo-principal");
 let botonesAgregar = document.querySelectorAll(".articulo-agregar");
+const cantidad = document.querySelector("#cantidad");
 
 function cargarProductos(articulosElegidos){
 
@@ -124,7 +126,7 @@ function cargarProductos(articulosElegidos){
     articulosElegidos.forEach(articulo =>{
         const div = document.createElement("div");
         div.classList.add("articulos");
-        div.innerHTML = `<img class="articulo-imagen"class="articulo-imagen" src="${articulo.imagen}" alt="${articulo.titulo}">
+        div.innerHTML = `<img class="articulo-imagen"class="articulo-imagen"  height="300px" width= "250px" src="${articulo.imagen}" alt="${articulo.titulo}">
         <div class="articulo-detalle">
             <h3 class="articulo-titulo">${articulo.titulo}</h3>
             <p class="articulo-precio">$${articulo.precio}</p>
@@ -132,65 +134,65 @@ function cargarProductos(articulosElegidos){
         </div>`;
         contenedorProductos.append(div);
     })
-}
 
+    actualizarBotonesAgregar();
+}
 
 cargarProductos(articulos);
 
 botonesCategorias.forEach(boton => {
-    boton.addEventistener("click", (e) => {
+    boton.addEventListener("click", (e) => {
 
         botonesCategorias.forEach(boton => boton.classList.remove("active"));
         e.currentTarget.classList.add("active")
         
-        const articulosBoton = articulos.filter(articulo => articulo.categoria.id === e.currentTarget.id);
+        if (e.currentTarget.id !== 'todos')
+        {
+            const articulosCategoria = articulos.find(articulo => articulo.categoria.id === e.currentTarget.id);
+            const articulosBoton = articulos.filter(articulo => articulo.categoria.id === e.currentTarget.id);
+            titulo.innerHTML = articulosCategoria.categoria.nombre;
+            cargarProductos(articulosBoton);
+            return
+        }
+        else{
+            titulo.innerHTML = "Todos los articulos";
+            cargarProductos(articulos);
+        }
 
-        
+        console.log(e.currentTarget.id);
 
-        cargarProductos(articulosBoton);
 
     } )
 })
 
 function actualizarBotonesAgregar(){
-    botonesAgregar = document.querySelectorAll(".producto-agregar");
-    
+    botonesAgregar = document.querySelectorAll(".articulo-agregar");
+
     botonesAgregar.forEach(boton => {
-        boton.addEventlistener("click", agregarAlCarrito)
+        boton.addEventListener("click", agregarAlCarrito);
     })
 }
- const articulosEnCarrito=[]
 
- function agregarAlCarrito(e){
+const articulosEnCarrito=[];
 
+function agregarAlCarrito(e){
     const idBoton = e.currentTarget.id;
-    const articuloAgregado = articulos.find(articulo => articulo.id === idBoton);
-
-    if(articulosEnCarrito.some(articulo => articulo.id === idBoton)){
-        const index = articulosEnCarrito.findIndex(articulo => articulo.id ===idBoton);
+    const articulosAgregados = articulos.find(articulo => articulo.id === idBoton);
+    
+     if (articulosEnCarrito.some(articulo => articulo.id === idBoton)){
+        const index = articulosEnCarrito.findIndex(articulo => articulo.id === idBoton);
         articulosEnCarrito[index].cantidad++;
-    } else{
-        articuloAgregado.cantidad = 1;
-        articulosEnCarrito.push(articuloAgregado);
-    }
-
-    actualziarCantidad();
-
-    localStorage.setItem("articulos-en-carrito", JSON.stringify(articulosEnCarrito));
- }
-
- function actualziarCantidad(){
-    let nuevaCantidad = articulosEnCarrito.reduce((acc, articulo) => acc + articulo.cantidad, 0)
-    cantidad.innerText = nuevaCantidad;
- }
 
 
+     }  
+     else{
+        articulosAgregados.cantidad = 1;
+        articulosEnCarrito.push(articulosAgregados);
+     }
 
+     console.log(articulosEnCarrito);
+}
 
-
-
-
-
-
-
-
+function actualizarCantidad(){
+    
+}
