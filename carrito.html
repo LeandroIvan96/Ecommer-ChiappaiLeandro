@@ -31,48 +31,27 @@
         <main>
             <h2 class="titlo-main">Tus Articulos</h2>
             <div class="contenedor-articulos">
-                <p class="carrito-vacio">No tiene articulos para comprar.</p>
-
-                <div class="carrito-articulos">
-                    <div class="carrito-articulo">
-
-                            <img class="carrito-articulo-imagen" src="./img/AMD4600G.jpg" alt="">
-                            <div class="carrito-articulo-titulo">
-                                <small>Titulo</small>
-                                <h3>1° Pc</h3>
-                            </div>
-                        <div class="carrito-articulo-cantidad">
-                            <small>Cantidad</small>
-                            <h3>1</h3>
-                        </div>
-                        <div class="carrito-articulo-precio">
-                            <small>Precio</small>
-                            <h3>$199,000</h3>
-                        </div>
-                        <div class="carrito-articulo-subtotal">
-                            <small>Subtotal</small>
-                            <h3>$199,000</h3>
-                        </div>
-                        <button class="carrito-articulos-eliminar"><i class="bi bi-trash"></i></button>
-                    </div>
+                <p id="carrito-vacio" class="carrito-vacio">No tiene articulos para comprar.</p>
+                <div id="carrito-articulos" class="carrito-articulos disabled" >
                 </div>
             </div>
         
-            <div class="carrito-acciones">
+            <div id="carrito-acciones" class="carrito-acciones disabled">
+
                 <div class="carrito-acciones-izquierda">
-                    <button class="carrito-acciones-vaciar">Eliminar Articulos</button>
+                    <button id="carrito-acciones-vaciar" class="carrito-acciones-vaciar">Eliminar Articulos</button>
                 </div>
                 <div class="carrito-acciones-derecha">
                     <div class="carrito-acciones-total">
                         <p>Total:</p>
-                        <p id="total">$34423</p>
+                        <p id="total">$34</p>
                     </div>
-                    <button class="carrito-acciones-comprar">Comprar</button>
+                    <button id="carrito-acciones-comprar" class="carrito-acciones-comprar">Comprar</button>
                 </div>
+
             </div>
         </main>
     </div>
-
-    <script src="carrito.js"></script>
+    <script src="/carrito.js"></script>
 </body>
 </html>

@@ -126,7 +126,7 @@ function cargarProductos(articulosElegidos){
     articulosElegidos.forEach(articulo =>{
         const div = document.createElement("div");
         div.classList.add("articulos");
-        div.innerHTML = `<img class="articulo-imagen"class="articulo-imagen"  height="300px" width= "250px" src="${articulo.imagen}" alt="${articulo.titulo}">
+        div.innerHTML = `<img class="articulo-imagen"class="articulo-imagen"  height="300px" width= "340px" src="${articulo.imagen}" alt="${articulo.titulo}">
         <div class="articulo-detalle">
             <h3 class="articulo-titulo">${articulo.titulo}</h3>
             <p class="articulo-precio">$${articulo.precio}</p>
@@ -173,7 +173,16 @@ function actualizarBotonesAgregar(){
     })
 }
 
-const articulosEnCarrito=[];
+let articulosEnCarrito;
+let articulosEnCarritoLS = localStorage.getItem("articulosEnCarrito");
+
+if (articulosEnCarritoLS){
+    articulosEnCarrito = JSON.parse(articulosEnCarritoLS);
+    actualizarCantidad();
+}else{
+    articulosEnCarrito = [];
+}
+
 
 function agregarAlCarrito(e){
     const idBoton = e.currentTarget.id;
@@ -182,17 +191,16 @@ function agregarAlCarrito(e){
      if (articulosEnCarrito.some(articulo => articulo.id === idBoton)){
         const index = articulosEnCarrito.findIndex(articulo => articulo.id === idBoton);
         articulosEnCarrito[index].cantidad++;
-
-
      }  
      else{
         articulosAgregados.cantidad = 1;
         articulosEnCarrito.push(articulosAgregados);
      }
-
-     console.log(articulosEnCarrito);
+     actualizarCantidad();
+     localStorage.setItem ("articulosEnCarrito",JSON.stringify(articulosEnCarrito));
 }
 
 function actualizarCantidad(){
-    
+    let nuevaCantidad = articulosEnCarrito.reduce((acc,articulo) => acc + articulo.cantidad, 0);
+    cantidad.innerText = nuevaCantidad;
 }
